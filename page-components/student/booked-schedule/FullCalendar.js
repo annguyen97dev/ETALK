@@ -386,7 +386,7 @@ const FullCalendar = ({ teacher, completeBooking, t }) => {
 		const res = await setEventAvailable({
 			UID: dataUser?.UID,
 			token: dataUser?.token,
-			program: infoSubmit.program,
+			title: infoSubmit.program,
 			packageID: infoSubmit.packageID.toString(),
 			courseID: infoSubmit.courseID.toString(),
 			start: infoSubmit.start,

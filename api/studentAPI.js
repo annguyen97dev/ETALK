@@ -264,8 +264,6 @@ export const GetScheduleTeacherAPI = async (params) => {
 	return result;
 };
 export const setEventAvailable = async (params, ...ars) => {
-	// console.log('StudentBooking', params);
-	// console.log('setEventAvailable', params.start);
 	let result;
 	try {
 		const formdata = new FormData();
@@ -274,7 +272,7 @@ export const setEventAvailable = async (params, ...ars) => {
 		formdata.append('Start', params.start);
 		formdata.append('End', params.end);
 		formdata.append('pagekageID', params.packageID);
-		formdata.append('title', '');
+		formdata.append('title', params.title);
 		formdata.append('courseID', params.courseID);
 		formdata.append('teacherID', params.teacher);
 		formdata.append('timeCourse', params.timeCourse);
