@@ -1,7 +1,7 @@
 import instance, { getAccessToken } from './instanceAPI';
 import { appSettings } from '~/config';
-const path = '/Api/ElearnStudentApi';
 import dayjs from 'dayjs';
+const path = '/Api/ElearnStudentApi';
 
 export const getLessons = async () => {
 	let result;

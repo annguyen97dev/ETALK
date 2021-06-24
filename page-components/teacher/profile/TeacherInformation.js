@@ -17,7 +17,7 @@ import {
 } from '~/api/teacherAPI';
 import { toast } from 'react-toastify';
 import { Context as ProfileContext } from '~/context/ProfileContext';
-import { UploadFilePost } from '~/api/optionAPI';
+import { UploadFilePost, UploadFileEvaluation } from '~/api/optionAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { i18n, withTranslation } from '~/i18n';
 import { useAuth } from '~/api/auth.js';
@@ -68,6 +68,7 @@ const initialState = {
 	// englishProficien: null,
 	loadOption: false,
 	LinkVideoIntroduce: '',
+	LinkAudio: '',
 };
 
 const reducer = (prevState, { type, payload }) => {
@@ -94,9 +95,11 @@ function TeacherInformation({ t }) {
 	// const [isLoading, setIsLoading] = useState(false);
 	const [myAvatar, setAvatar] = useState();
 	const [myVideo, setVideo] = useState();
+	const [myAudio, setAudio] = useState();
 
 	const inputFileRef = useRef(true);
 	const inputFileVideo = useRef(true);
+	const inputFileAudio = useRef(true);
 
 	const getVideoLink = (e) => {
 		let value = e.target.value;
@@ -112,6 +115,26 @@ function TeacherInformation({ t }) {
 				if (!!res && res?.rs) {
 					setValue('avatar', res?.g ?? '');
 					setAvatar(res.g);
+				}
+			}
+		} catch (error) {
+			console.log(error?.message ?? 'Lỗi gọi api');
+		}
+		setIsLoading(false);
+	};
+
+	const handleUploadAudio = async () => {
+		console.log('start up audio');
+		setIsLoading(true);
+		try {
+			const input = inputFileAudio.current;
+			console.log('file audio: ', inputFileAudio);
+			if (input.files && input.files[0]) {
+				const res = await UploadFileEvaluation(input.files);
+				console.log('res audio: ', res);
+				if (res.Code == 200) {
+					setValue('LinkAudio', res?.Data ?? '');
+					setAudio(res.Data);
 				}
 			}
 		} catch (error) {
@@ -180,6 +203,7 @@ function TeacherInformation({ t }) {
 				console.log('loadTeacherInfo res.Data', res.Data);
 				setAvatar(res.Data?.TeacherIMG);
 				setVideo(res.Data?.LinkVideoIntroduce);
+				setAudio(res.Data?.LinkAudio);
 
 				const obj = {
 					avatar: res.Data?.TeacherIMG ?? '',
@@ -213,6 +237,7 @@ function TeacherInformation({ t }) {
 					experience: res.Data?.Experience ?? '',
 					description: res.Data?.Description ?? '',
 					biography: res.Data?.Biography ?? '',
+					LinkAudio: res.Data?.LinkAudio ?? '',
 				};
 
 				console.log('loadTeacherInfo', obj);
@@ -257,6 +282,7 @@ function TeacherInformation({ t }) {
 				TeacherIMG: myAvatar ?? '',
 				LinkVideoIntroduce: myVideo ?? '',
 				TeacherSchool: data?.schoolName ?? '', // str
+				LinkAudio: myAudio ?? '',
 			});
 
 			if (res.Code === 200) {
@@ -523,6 +549,36 @@ function TeacherInformation({ t }) {
 										{errors.timeZone?.message}
 									</span>
 								)}
+							</div>
+
+							<div className="form-group col-12 col-sm-12 d-flex align-items-center">
+								<div className="input-float mr-2">
+									<input
+										ref={inputFileAudio}
+										type="file"
+										className={`form-control ${
+											!!errors && errors.audio ? 'error-form' : ''
+										}`}
+										placeholder="Audio *"
+										name="audio"
+										required
+										id="audio"
+										onChange={handleUploadAudio}
+									/>
+									<label htmlFor="birthday">Audio *</label>
+								</div>
+
+								{!!errors && !!errors.audio && (
+									<span className="tx-danger mg-t-5 d-block">
+										{errors.audio?.message}
+									</span>
+								)}
+
+								<audio
+									src={myAudio ? myAudio : ''}
+									controls
+									type="audio/mpeg"
+								/>
 							</div>
 							{/* <div className="form-group col-12 col-sm-12">
 								<div className="input-float">
