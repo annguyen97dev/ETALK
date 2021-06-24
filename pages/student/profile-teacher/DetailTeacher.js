@@ -205,7 +205,11 @@ const DetailTeacher = ({ t, dataTeacher }) => {
 										</p>
 									</div>
 									<div className="col-sm-12">
-										<p className="mg-b-0 ">{dataProfile?.LinkIntroduce}</p>
+										{dataProfile?.LinkAudio ? (
+											<audio src={dataProfile?.LinkAudio} controls></audio>
+										) : (
+											''
+										)}
 									</div>
 								</div>
 							)}
@@ -282,21 +286,6 @@ const DetailTeacher = ({ t, dataTeacher }) => {
 									</div>
 									<div className="col-sm-12">
 										<p className="mg-b-0 ">{dataProfile?.AccountNationName}</p>
-									</div>
-								</div>
-							)}
-
-							{isLoading ? (
-								<Skeleton variant="text" className={classes.skeLong} />
-							) : (
-								<div className="form-row align-items-center mg-b-20">
-									<div className="col-sm-12 col-label-fixed">
-										<p className="mg-b-0 tx-medium title-item">
-											<i class="fas fa-volume-down"></i> {t('Audio')}:
-										</p>
-									</div>
-									<div className="col-sm-12">
-										<audio src={dataProfile?.LinkAudio} controls></audio>
 									</div>
 								</div>
 							)}
