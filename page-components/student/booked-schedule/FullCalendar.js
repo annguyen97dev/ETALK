@@ -876,11 +876,11 @@ const FullCalendar = ({ teacher, completeBooking, t }) => {
 					});
 				}
 
-				if (args.el.className.includes('haveBooked')) {
-					console.log('Target: ', args.el.getAttribute('aria-describedby'));
-					let target = args.el;
-					setAnchorEl(target);
-				}
+				// if (args.el.className.includes('haveBooked')) {
+				// 	console.log('Target: ', args.el.getAttribute('aria-describedby'));
+				// 	let target = args.el;
+				// 	setAnchorEl(target);
+				// }
 			} else {
 				if (extendedProps.Color === 'custom-color-H') {
 					toast.error('Bạn phải book buổi học trước hơn 1 tiếng', {
@@ -889,7 +889,11 @@ const FullCalendar = ({ teacher, completeBooking, t }) => {
 					});
 				}
 			}
-
+			if (args.el.className.includes('haveBooked')) {
+				console.log('Target: ', args.el.getAttribute('aria-describedby'));
+				let target = args.el;
+				setAnchorEl(target);
+			}
 			// ---------------
 		};
 
