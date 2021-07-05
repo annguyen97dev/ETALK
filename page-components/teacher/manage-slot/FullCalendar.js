@@ -657,7 +657,7 @@ const FullCalendar = ({ statusShow, t }) => {
 			        `,
 				})
 				.on('click', function () {
-					if ($(this).hasClass('custom-color-G')) {
+					if ($(this).is('.custom-color-G, .custom-color-F ')) {
 						$(this).popover('toggle');
 					}
 				});
