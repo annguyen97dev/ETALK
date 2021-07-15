@@ -31,6 +31,17 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Box from '@material-ui/core/Box';
 import Pagination from '@material-ui/lab/Pagination';
 
+import {
+	FETCH_ERROR,
+	SEARCH_ATT,
+	CHANGE_PASSWORD_SUCCESS,
+	FILL_PASSWORD,
+	INCORRECT_PASSWORD,
+	DIFFERENT_PASSWORD,
+	CONFIRM_PASSWORD,
+	UPDATE_PROFILE_SUCCESS,
+} from '~/components/common/Constant/toast';
+
 // ----------- PHÂN TRANG ---------------
 
 const initialState = {
@@ -56,17 +67,6 @@ const reducer = (state, action) => {
 			throw new Error();
 	}
 };
-
-import {
-	FETCH_ERROR,
-	SEARCH_ATT,
-	CHANGE_PASSWORD_SUCCESS,
-	FILL_PASSWORD,
-	INCORRECT_PASSWORD,
-	DIFFERENT_PASSWORD,
-	CONFIRM_PASSWORD,
-	UPDATE_PROFILE_SUCCESS,
-} from '~/components/common/Constant/toast';
 const DateTimeFormat = new Intl.DateTimeFormat('vi-VN', {
 	month: '2-digit',
 	day: '2-digit',
@@ -207,60 +207,60 @@ const AllClassRow = ({ data, showStudentModal, location }) => {
 		window.location.href = `skype:${SkypeID}?chat`;
 	};
 
-	useEffect(() => {
-		const testBreakLine = () => {
-			// let characterCount = data.HomeWork.length + numberOfLineBreaks;
-			let numberOfLineBreaksRemark = (data?.Remark.match(/\n/g) || []).length;
-			let numberOfLineBreaksHomework = (data?.HomeWork.match(/\n/g) || [])
-				.length;
+	// useEffect(() => {
+	// 	const testBreakLine = () => {
+	// 		// let characterCount = data.HomeWork.length + numberOfLineBreaks;
+	// 		let numberOfLineBreaksRemark = (data?.Remark.match(/\n/g) || []).length;
+	// 		let numberOfLineBreaksHomework = (data?.HomeWork.match(/\n/g) || [])
+	// 			.length;
 
-			const remarkOutput = document.querySelectorAll('.remarkOutput');
-			const homeworkOutput = document.querySelectorAll('.homeworkOutput');
+	// 		const remarkOutput = document.querySelectorAll('.remarkOutput');
+	// 		const homeworkOutput = document.querySelectorAll('.homeworkOutput');
 
-			// ----- Check remark ----
-			if (numberOfLineBreaksRemark > 0) {
-				let lines = data?.Remark.split('\n');
-				console.log('Lines: ', lines);
+	// 		// ----- Check remark ----
+	// 		if (numberOfLineBreaksRemark > 0) {
+	// 			let lines = data?.Remark.split('\n');
+	// 			console.log('Lines: ', lines);
 
-				let ul = document.createElement('ul');
-				ul.style.paddingLeft = '0';
-				remarkOutput[location].appendChild(ul);
+	// 			let ul = document.createElement('ul');
+	// 			ul.style.paddingLeft = '0';
+	// 			remarkOutput[location].appendChild(ul);
 
-				for (const [index, value] of lines.entries()) {
-					let li = document.createElement('li');
-					let text = document.createTextNode(value);
-					ul.appendChild(li);
-					li.appendChild(text);
-				}
-			} else {
-				remarkOutput[location].innerHTML = data?.Remark;
-			}
+	// 			for (const [index, value] of lines.entries()) {
+	// 				let li = document.createElement('li');
+	// 				let text = document.createTextNode(value);
+	// 				ul.appendChild(li);
+	// 				li.appendChild(text);
+	// 			}
+	// 		} else {
+	// 			remarkOutput[location].innerHTML = data?.Remark;
+	// 		}
 
-			// ---- Check Homework ----
-			if (numberOfLineBreaksHomework > 0) {
-				let lines = data?.HomeWork.split('\n');
-				console.log('Lines: ', lines);
+	// 		// ---- Check Homework ----
+	// 		if (numberOfLineBreaksHomework > 0) {
+	// 			let lines = data?.HomeWork.split('\n');
+	// 			console.log('Lines: ', lines);
 
-				let ul = document.createElement('ul');
-				ul.style.paddingLeft = '0';
+	// 			let ul = document.createElement('ul');
+	// 			ul.style.paddingLeft = '0';
 
-				homeworkOutput[location].appendChild(ul);
+	// 			homeworkOutput[location].appendChild(ul);
 
-				for (const [index, value] of lines.entries()) {
-					let li = document.createElement('li');
-					let text = document.createTextNode(value);
-					ul.appendChild(li);
-					li.appendChild(text);
-				}
-			} else {
-				homeworkOutput[location].innerHTML = data?.HomeWork;
-			}
-		};
+	// 			for (const [index, value] of lines.entries()) {
+	// 				let li = document.createElement('li');
+	// 				let text = document.createTextNode(value);
+	// 				ul.appendChild(li);
+	// 				li.appendChild(text);
+	// 			}
+	// 		} else {
+	// 			homeworkOutput[location].innerHTML = data?.HomeWork;
+	// 		}
+	// 	};
 
-		if (data) {
-			testBreakLine();
-		}
-	}, [data]);
+	// 	if (data) {
+	// 		testBreakLine();
+	// 	}
+	// }, [data]);
 
 	return (
 		<>
@@ -307,8 +307,8 @@ const AllClassRow = ({ data, showStudentModal, location }) => {
 				<td>{data.Time}</td>
 				<td>{data.ClassName}</td>
 				<td>{data.ClassStatus}</td>
-				<td class="remarkOutput"></td>
-				<td class="homeworkOutput"></td>
+				{/* <td class="remarkOutput"></td>
+				<td class="homeworkOutput"></td> */}
 				<td>{data.NoteHome}</td>
 				{/* <td>{data.Remark}</td> */}
 				<td>
@@ -660,8 +660,8 @@ const AttendanceRecord = ({ t }) => {
 									<th className="text-left">{t('Time')}</th>
 									<th className="text-left">{t('Class')}</th>
 									<th className="text-left">{t('Class Status')}</th>
-									<th className="text-left">{t('Remark')}</th>
-									<th className="text-left">{t('Homework')}</th>
+									{/* <th className="text-left">{t('Remark')}</th>
+									<th className="text-left">{t('Homework')}</th> */}
 									<th className="text-left">{t('Note')}</th>
 									<th className="text-left">{t('Action')}</th>
 									{/* <th className="">Remark</th> */}

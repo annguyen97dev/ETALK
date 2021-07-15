@@ -797,39 +797,68 @@ const FullCalendar = ({ teacher, completeBooking, t }) => {
 			const diffCheck = getDifferentMinBetweenTime(new Date(), start);
 			let Cancelable = diffCheck > 60 ? true : false;
 
+			let timeCourse = null;
+			if (localStorage.getItem('isLogin')) {
+				let dataUser = localStorage.getItem('dataUser');
+				dataUser = JSON.parse(dataUser);
+
+				timeCourse = dataUser.TimeCourse;
+			}
+
+			const diff = getDifferentMinBetweenTime(start, end);
+
+			setModalData({
+				...modalData,
+				start: extendedProps.StartDate,
+				end: extendedProps.EndDate,
+				StudyTime: extendedProps.StudyTime,
+				StudentUID: extendedProps.StudentUID,
+				diff: diff,
+				timeCourse: timeCourse,
+				Avatar: extendedProps.Avatar,
+				TeacherName: extendedProps.TeacherName,
+				PackageName: extendedProps.PackageName,
+				CourseName: extendedProps.CourseName,
+				StudyDate: extendedProps.StudyDate,
+				TeacherSkype: extendedProps.TeacherSkype,
+				StudentSkype: extendedProps.StudentSkype,
+				BookingID: extendedProps.BookingID,
+				Cancelable: Cancelable,
+			});
+
 			if (diffCheck >= 60) {
 				toast.dismiss();
 				// Get time Course
-				let timeCourse = null;
-				if (localStorage.getItem('isLogin')) {
-					let dataUser = localStorage.getItem('dataUser');
-					dataUser = JSON.parse(dataUser);
+				// let timeCourse = null;
+				// if (localStorage.getItem('isLogin')) {
+				// 	let dataUser = localStorage.getItem('dataUser');
+				// 	dataUser = JSON.parse(dataUser);
 
-					timeCourse = dataUser.TimeCourse;
-				}
+				// 	timeCourse = dataUser.TimeCourse;
+				// }
+
+				// const diff = getDifferentMinBetweenTime(start, end);
 
 				const element = args.el;
 
-				const diff = getDifferentMinBetweenTime(start, end);
-
-				setModalData({
-					...modalData,
-					start: extendedProps.StartDate,
-					end: extendedProps.EndDate,
-					StudyTime: extendedProps.StudyTime,
-					StudentUID: extendedProps.StudentUID,
-					diff: diff,
-					timeCourse: timeCourse,
-					Avatar: extendedProps.Avatar,
-					TeacherName: extendedProps.TeacherName,
-					PackageName: extendedProps.PackageName,
-					CourseName: extendedProps.CourseName,
-					StudyDate: extendedProps.StudyDate,
-					TeacherSkype: extendedProps.TeacherSkype,
-					StudentSkype: extendedProps.StudentSkype,
-					BookingID: extendedProps.BookingID,
-					Cancelable: Cancelable,
-				});
+				// setModalData({
+				// 	...modalData,
+				// 	start: extendedProps.StartDate,
+				// 	end: extendedProps.EndDate,
+				// 	StudyTime: extendedProps.StudyTime,
+				// 	StudentUID: extendedProps.StudentUID,
+				// 	diff: diff,
+				// 	timeCourse: timeCourse,
+				// 	Avatar: extendedProps.Avatar,
+				// 	TeacherName: extendedProps.TeacherName,
+				// 	PackageName: extendedProps.PackageName,
+				// 	CourseName: extendedProps.CourseName,
+				// 	StudyDate: extendedProps.StudyDate,
+				// 	TeacherSkype: extendedProps.TeacherSkype,
+				// 	StudentSkype: extendedProps.StudentSkype,
+				// 	BookingID: extendedProps.BookingID,
+				// 	Cancelable: Cancelable,
+				// });
 
 				if (args.el.className.includes('custom-color-H')) {
 					// Get info to submit open slot
